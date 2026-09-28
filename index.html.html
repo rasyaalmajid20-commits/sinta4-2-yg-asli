@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08030d">
+<meta name="description" content="SINTA Journal Horror Index — Website PKL Rasya Almajid">
+<title>SINTA Journal Horror Index | Rasya Almajid</title>
+
+<style>
+:root{
+  --bg:#06030a;
+  --panel:rgba(17,8,23,.78);
+  --panel2:rgba(32,10,27,.72);
+  --red:#ff1838;
+  --red2:#8d001b;
+  --pink:#ff5d9e;
+  --purple:#9d4edd;
+  --violet:#4b1b72;
+  --text:#f8edf6;
+  --muted:#bbaabb;
+  --line:rgba(255,80,150,.20);
+  --gold:#ffc857;
+  --green:#75f6b2;
+  --shadow:0 24px 80px rgba(0,0,0,.58);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 15% 15%,rgba(157,78,221,.18),transparent 30%),
+    radial-gradient(circle at 85% 20%,rgba(255,24,56,.16),transparent 28%),
+    radial-gradient(circle at 50% 100%,rgba(255,93,158,.10),transparent 35%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif;
+  min-height:100vh;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed; inset:0; pointer-events:none; z-index:50;
+  background:linear-gradient(rgba(255,255,255,.018) 50%,transparent 50%);
+  background-size:100% 4px;
+  mix-blend-mode:soft-light;
+  opacity:.45;
+}
+a{color:inherit}
+button,input{font:inherit}
+
+/* Atmospheric background */
+.fog,.fog:before,.fog:after{
+  position:fixed; content:""; pointer-events:none; z-index:-2;
+  width:60vw;height:30vh; border-radius:50%;
+  filter:blur(55px);
+  opacity:.14;
+}
+.fog{left:-20vw;bottom:2vh;background:#fff;animation:fog 18s ease-in-out infinite alternate}
+.fog:before{left:65vw;top:-20vh;background:#ff3970;animation:fog 22s ease-in-out infinite alternate-reverse}
+.fog:after{left:25vw;top:-15vh;background:#8b5cf6;animation:fog 26s ease-in-out infinite alternate}
+@keyframes fog{from{transform:translateX(-8%) scale(1)}to{transform:translateX(18%) scale(1.18)}}
+
+.stars{
+  position:fixed;inset:0;z-index:-3;pointer-events:none;
+  background-image:
+   radial-gradient(1px 1px at 12% 18%,#fff,transparent),
+   radial-gradient(1px 1px at 32% 8%,#fff,transparent),
+   radial-gradient(1px 1px at 67% 22%,#fff,transparent),
+   radial-gradient(1px 1px at 80% 12%,#fff,transparent),
+   radial-gradient(1px 1px at 92% 38%,#fff,transparent),
+   radial-gradient(1px 1px at 44% 32%,#fff,transparent),
+   radial-gradient(1px 1px at 21% 54%,#fff,transparent),
+   radial-gradient(1px 1px at 71% 66%,#fff,transparent),
+   radial-gradient(1px 1px at 55% 85%,#fff,transparent);
+  opacity:.5;
+}
+.drip{
+  position:fixed;top:-5px;width:10px;height:70px;background:linear-gradient(#c9002b,#500014);
+  border-radius:0 0 12px 12px;z-index:30;opacity:.7;filter:drop-shadow(0 5px 8px #000);
+}
+.drip:after{content:"";position:absolute;bottom:-8px;left:2px;width:6px;height:16px;background:#7d001c;border-radius:50%}
+.d1{left:8%;height:45px}.d2{left:19%;height:78px}.d3{left:47%;height:32px}.d4{left:76%;height:65px}.d5{left:91%;height:42px}
+
+/* Layout */
+.container{width:min(1180px,92%);margin:auto}
+.topbar{
+  position:sticky;top:0;z-index:40;
+  backdrop-filter:blur(18px);
+  background:rgba(5,2,9,.72);
+  border-bottom:1px solid var(--line);
+}
+.nav{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:.08em}
+.brand-mark{
+  width:40px;height:40px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 35% 30%,#fff 0 6%,#ff9fc5 7% 17%,#111 18% 30%,#b90028 31% 100%);
+  box-shadow:0 0 25px rgba(255,24,56,.45);
+  font-size:19px;
+}
+.navlinks{display:flex;gap:18px;font-size:13px;color:var(--muted)}
+.navlinks a{text-decoration:none}.navlinks a:hover{color:#fff}
+.badge{
+  border:1px solid rgba(255,93,158,.35);padding:8px 12px;border-radius:999px;
+  color:#ffd6e8;background:rgba(255,24,56,.08);font-size:12px
+}
+
+.hero{padding:76px 0 44px;position:relative}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:38px;align-items:center}
+.eyebrow{color:#ff83b4;text-transform:uppercase;letter-spacing:.28em;font-weight:800;font-size:12px}
+h1{
+  margin:12px 0 16px;font-size:clamp(42px,7vw,84px);line-height:.91;
+  letter-spacing:-.055em;text-transform:uppercase;
+  text-shadow:0 0 28px rgba(255,24,56,.24),4px 4px 0 rgba(95,0,26,.7);
+}
+.horror-word{
+  display:inline-block;
+  background:linear-gradient(90deg,#fff,#ffb1ce 35%,#ff1838 75%,#9d4edd);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:#d6c3d3;line-height:1.75;max-width:720px}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}
+.btn{
+  border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;
+  padding:12px 17px;border-radius:13px;text-decoration:none;cursor:pointer;
+  transition:.25s;box-shadow:0 8px 25px rgba(0,0,0,.2)
+}
+.btn:hover{transform:translateY(-3px);border-color:rgba(255,93,158,.65);box-shadow:0 14px 35px rgba(255,24,56,.16)}
+.btn-primary{background:linear-gradient(135deg,#a30025,#ff1838 60%,#8d35c9);border-color:transparent}
+.profile{
+  margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:720px
+}
+.profile-card{
+  padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)
+}
+.profile-card small{display:block;color:#9f8c9c;font-size:10px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:5px}
+.profile-card strong{font-size:13px}
+
+.clown-wrap{min-height:470px;position:relative;display:grid;place-items:center}
+.moon{
+  position:absolute;width:290px;height:290px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#fff 0 8%,#ffe5f0 9% 55%,#d5b7ce 75%,#7d5b78 100%);
+  box-shadow:0 0 70px rgba(255,214,236,.22);
+  top:10px;right:3%;opacity:.86;
+}
+.moon:before,.moon:after{
+  content:"";position:absolute;border-radius:50%;background:rgba(93,49,80,.15)
+}
+.moon:before{width:45px;height:45px;left:65px;top:75px}.moon:after{width:72px;height:30px;right:45px;bottom:75px}
+.clown{
+  width:270px;height:340px;position:relative;z-index:2;filter:drop-shadow(0 20px 35px rgba(0,0,0,.8));
+  animation:float 5s ease-in-out infinite
+}
+@keyframes float{50%{transform:translateY(-12px) rotate(-1deg)}}
+.hair{position:absolute;top:35px;left:33px;width:204px;height:92px}
+.hair:before,.hair:after{content:"";position:absolute;width:75px;height:130px;background:#e5e5e5;border-radius:80% 30% 60% 30%;top:-20px}
+.hair:before{left:-24px;transform:rotate(18deg)}.hair:after{right:-24px;transform:rotate(-18deg)}
+.face{
+  position:absolute;left:44px;top:52px;width:182px;height:230px;
+  background:linear-gradient(90deg,#eee,#fff 45%,#ddd);
+  border-radius:48% 48% 42% 42% / 40% 40% 62% 62%;
+  box-shadow:inset -15px -8px 25px rgba(0,0,0,.16);
+}
+.ear{position:absolute;width:38px;height:56px;background:#ddd;border-radius:50%;top:105px}.ear.l{left:26px}.ear.r{right:26px}
+.eye{position:absolute;top:92px;width:45px;height:28px;border-radius:50%;background:#161018;overflow:hidden}
+.eye:after{content:"";position:absolute;width:16px;height:16px;border-radius:50%;background:#ff1e43;left:15px;top:6px;box-shadow:0 0 14px #ff1838}
+.eye.l{left:30px}.eye.r{right:30px}
+.brow{position:absolute;top:77px;width:54px;height:8px;background:#291326;border-radius:100%;transform:rotate(10deg)}.brow.l{left:25px}.brow.r{right:25px;transform:rotate(-10deg)}
+.nose{
+  position:absolute;top:117px;left:79px;width:26px;height:46px;background:#e7b7c8;
+  border-radius:45% 45% 60% 60%;box-shadow:inset -5px -5px 8px rgba(0,0,0,.12)
+}
+.smile{
+  position:absolute;left:26px;top:148px;width:130px;height:60px;
+  border-bottom:12px solid #8d001b;border-radius:0 0 80px 80px;
+}
+.teeth{
+  position:absolute;left:39px;top:169px;width:104px;height:30px;
+  display:flex;overflow:hidden;border-radius:0 0 45px 45px
+}
+.teeth i{flex:1;background:#fff;border-right:1px solid #ddd}
+.blood{
+  position:absolute;left:72px;top:190px;width:85px;height:52px;
+  background:linear-gradient(180deg,transparent 0 25%,#8d001b 26% 100%);
+  clip-path:polygon(0 0,100% 0,82% 100%,63% 45%,45% 88%,26% 42%,8% 100%);
+  opacity:.9
+}
+.costume{
+  position:absolute;left:32px;top:240px;width:206px;height:100px;
+  background:linear-gradient(90deg,#160c1d,#3d1238 48%,#120b18);
+  clip-path:polygon(12% 0,88% 0,100% 100%,0 100%);
+  border-radius:30px 30px 8px 8px
+}
+.collar{
+  position:absolute;left:55px;top:227px;width:160px;height:60px;
+  background:#eee;clip-path:polygon(0 0,100% 0,85% 100%,50% 70%,15% 100%);
+}
+.bow{
+  position:absolute;top:278px;left:108px;width:55px;height:28px;background:#ff1838;
+  clip-path:polygon(0 50%,45% 0,50% 35%,100% 0,100% 100%,50% 65%,45% 100%);
+}
+.balloon{position:absolute;width:28px;height:36px;border-radius:50% 50% 45% 45%;background:#ff1838;box-shadow:0 0 18px rgba(255,24,56,.35)}
+.balloon:after{content:"";position:absolute;width:1px;height:110px;background:#b99;left:50%;top:34px}
+.b1{left:5%;top:28%;transform:rotate(-10deg)}.b2{right:2%;top:42%;background:#9d4edd;transform:rotate(12deg)}.b3{left:14%;bottom:12%;background:#ff5d9e}
+
+.section{padding:40px 0 70px}
+.section-title{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:18px}
+.section-title h2{margin:0;font-size:30px}
+.section-title p{margin:0;color:var(--muted);font-size:13px}
+.controls{
+  display:grid;grid-template-columns:1fr auto auto;gap:10px;margin:18px 0 24px
+}
+.search{
+  background:rgba(255,255,255,.045);border:1px solid var(--line);color:#fff;
+  padding:14px 16px;border-radius:14px;outline:none;width:100%
+}
+.search:focus{border-color:rgba(255,93,158,.7);box-shadow:0 0 0 4px rgba(255,93,158,.08)}
+select{
+  background:#100814;border:1px solid var(--line);color:#fff;border-radius:14px;padding:0 14px;min-height:48px
+}
+.count{display:flex;align-items:center;justify-content:center;padding:0 14px;border:1px solid var(--line);border-radius:14px;color:#ffbad6;font-weight:800}
+
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  position:relative;overflow:hidden;min-height:285px;
+  background:linear-gradient(145deg,rgba(35,13,36,.9),rgba(11,7,16,.92));
+  border:1px solid var(--line);border-radius:20px;padding:21px;
+  box-shadow:var(--shadow);transition:.3s;cursor:pointer
+}
+.card:hover{transform:translateY(-7px) rotateX(1deg);border-color:rgba(255,93,158,.62);box-shadow:0 30px 80px rgba(255,24,56,.12)}
+.card:before{
+  content:"";position:absolute;width:150px;height:150px;right:-65px;top:-65px;border-radius:50%;
+  background:radial-gradient(circle,#ff1838,transparent 67%);opacity:.16
+}
+.rank{font-size:11px;font-weight:900;letter-spacing:.16em;color:#ffc2da}
+.jname{font-size:20px;line-height:1.15;margin:11px 0 10px;font-weight:900}
+.publisher{font-size:12px;color:#9f8d9f;min-height:34px}
+.tags{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0}
+.tag{font-size:10px;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08);color:#e9dbe7}
+.scope{font-size:12px;line-height:1.6;color:#c7b4c5}
+.card-footer{position:absolute;bottom:18px;left:21px;right:21px;display:flex;justify-content:space-between;align-items:center;color:#ff8eb9;font-size:11px;font-weight:800}
+.arrow{font-size:20px}
+
+.notice{
+  margin-top:25px;padding:16px 18px;border-radius:16px;border:1px solid rgba(255,200,87,.22);
+  background:rgba(255,200,87,.05);color:#e8d8bb;font-size:12px;line-height:1.65
+}
+
+footer{
+  padding:36px 0 55px;border-top:1px solid var(--line);color:#a996a7;font-size:12px
+}
+footer strong{color:#fff}
+
+/* Modal */
+.modal{position:fixed;inset:0;background:rgba(2,0,5,.83);backdrop-filter:blur(12px);z-index:100;display:none;padding:24px;overflow:auto}
+.modal.open{display:grid;place-items:center}
+.dialog{
+  width:min(850px,100%);max-height:90vh;overflow:auto;
+  background:linear-gradient(145deg,#1b0b20,#08050b 75%);
+  border:1px solid rgba(255,93,158,.35);border-radius:26px;
+  box-shadow:0 35px 120px rgba(0,0,0,.85);padding:28px;position:relative
+}
+.close{
+  position:absolute;right:18px;top:16px;width:40px;height:40px;border-radius:50%;
+  border:1px solid var(--line);background:#130913;color:#fff;cursor:pointer;font-size:20px
+}
+.modal-rank{color:#ff7cad;font-size:12px;font-weight:900;letter-spacing:.18em}
+.modal h3{font-size:clamp(26px,4vw,42px);margin:10px 55px 10px 0;line-height:1}
+.detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:22px 0}
+.detail{
+  border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);
+  padding:13px;border-radius:14px
+}
+.detail small{display:block;color:#8f7d8d;text-transform:uppercase;font-size:9px;letter-spacing:.14em;margin-bottom:4px}
+.detail b{font-size:13px}
+.modal-scope{padding:17px;border-radius:17px;background:rgba(255,24,56,.055);border:1px solid rgba(255,24,56,.14);line-height:1.7;color:#d6c6d4}
+.modal-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+.reveal{opacity:0;transform:translateY(18px);animation:reveal .8s ease forwards}
+@keyframes reveal{to{opacity:1;transform:none}}
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .clown-wrap{min-height:400px;order:-1}
+  .grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:650px){
+  .navlinks{display:none}
+  .hero{padding-top:50px}
+  .profile{grid-template-columns:1fr}
+  .grid{grid-template-columns:1fr}
+  .controls{grid-template-columns:1fr}
+  .count{min-height:48px}
+  .detail-grid{grid-template-columns:1fr}
+  .clown{transform:scale(.82)}
+  .moon{width:220px;height:220px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+
+<body>
+<div class="stars"></div>
+<div class="fog"></div>
+<div class="drip d1"></div><div class="drip d2"></div><div class="drip d3"></div><div class="drip d4"></div><div class="drip d5"></div>
+
+<header class="topbar">
+  <div class="container nav">
+    <div class="brand"><span class="brand-mark">☠</span><span>SINTA HORROR INDEX</span></div>
+    <nav class="navlinks">
+      <a href="#home">Home</a><a href="#jurnal">Daftar Jurnal</a><a href="#tentang">Tentang</a>
+    </nav>
+    <span class="badge">PKL • 2026</span>
+  </div>
+</header>
+
+<main id="home">
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="eyebrow">Welcome to the academic nightmare</div>
+      <h1>Jelajahi<br><span class="horror-word">Jurnal SINTA</span></h1>
+      <p>
+        Database mini jurnal untuk kebutuhan PKL, dibuat dengan nuansa Halloween:
+        gelap, elegan, sedikit mengganggu, tetapi tetap informatif. Pilih kartu jurnal
+        untuk membuka halaman detail dan melihat informasi pentingnya.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#jurnal">🎈 Mulai Menjelajah</a>
+        <a class="btn" href="https://sinta.kemdiktisaintek.go.id/journals/index/" target="_blank" rel="noopener">↗ Sumber SINTA</a>
+      </div>
+
+      <div class="profile">
+        <div class="profile-card"><small>Nama</small><strong>Rasya Almajid</strong></div>
+        <div class="profile-card"><small>Status</small><strong>Siswa PKL • Al-Muhtadin</strong></div>
+        <div class="profile-card"><small>Pembimbing</small><strong>Pak Riadi Marta Dinata, S.Ti., M.Kom.</strong></div>
+      </div>
+    </div>
+
+    <div class="clown-wrap reveal">
+      <div class="moon"></div>
+      <div class="balloon b1"></div><div class="balloon b2"></div><div class="balloon b3"></div>
+      <div class="clown" aria-label="Ilustrasi badut horor">
+        <div class="hair"></div>
+        <div class="ear l"></div><div class="ear r"></div>
+        <div class="face">
+          <div class="brow l"></div><div class="brow r"></div>
+          <div class="eye l"></div><div class="eye r"></div>
+          <div class="nose"></div><div class="smile"></div>
+          <div class="teeth"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="blood"></div>
+        </div>
+        <div class="collar"></div><div class="costume"></div><div class="bow"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="jurnal">
+  <div class="container">
+    <div class="section-title">
+      <div>
+        <div class="eyebrow">The Journal Vault</div>
+        <h2>Daftar Jurnal</h2>
+      </div>
+      <p id="subtitle">Klik salah satu jurnal untuk melihat detail.</p>
+    </div>
+
+    <div class="controls">
+      <input id="search" class="search" type="search" placeholder="🔎 Cari jurnal, bidang, penerbit, atau SINTA...">
+      <select id="rank">
+        <option value="all">Semua SINTA</option>
+        <option value="S1">SINTA 1</option>
+        <option value="S2">SINTA 2</option>
+        <option value="other">Belum dirinci</option>
+      </select>
+      <div class="count" id="count">20 jurnal</div>
+    </div>
+
+    <div id="grid" class="grid"></div>
+
+    <div class="notice">
+      <strong>Catatan sumber:</strong> ringkasan pada halaman ini disusun dari daftar analisis jurnal yang kamu berikan,
+      lalu diarahkan ke sumber resmi SINTA untuk pengecekan lanjutan. Status SINTA yang tidak disebutkan secara jelas
+      pada materi sumber ditampilkan sebagai “Belum dirinci” agar tidak mengarang data. Status akreditasi/indexing dapat berubah,
+      jadi untuk laporan resmi tetap lakukan verifikasi pada SINTA terbaru.
+    </div>
+  </div>
+</section>
+
+<section class="section" id="tentang">
+  <div class="container">
+    <div class="section-title">
+      <div><div class="eyebrow">PKL Profile</div><h2>Tentang Pembuat</h2></div>
+    </div>
+    <div class="profile" style="max-width:none">
+      <div class="profile-card"><small>Nama</small><strong>Rasya Almajid</strong></div>
+      <div class="profile-card"><small>Instansi</small><strong>Al-Muhtadin</strong></div>
+      <div class="profile-card"><small>Status</small><strong>Siswa Magang / PKL</strong></div>
+      <div class="profile-card"><small>Pembimbing</small><strong>Riadi Marta Dinata, S.Ti., M.Kom.</strong></div>
+      <div class="profile-card"><small>Jabatan Pembimbing</small><strong>Kalab Komputer FSTT ISTN</strong></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>SINTA Horror Index</strong> • Website PKL Rasya Almajid • Halloween / horror academic theme.
+    <br><br>
+    Sumber resmi: <a href="https://sinta.kemdiktisaintek.go.id/journals/index/" target="_blank" rel="noopener">SINTA Kemdiktisaintek</a>.
+    Ilustrasi badut horor pada halaman ini dibuat sebagai elemen visual CSS dan bukan aset resmi film <em>IT</em>.
+  </div>
+</footer>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="dialog">
+    <button class="close" id="close" aria-label="Tutup">×</button>
+    <div class="modal-rank" id="modalRank"></div>
+    <h3 id="modalTitle"></h3>
+    <div class="detail-grid" id="details"></div>
+    <div class="modal-scope" id="modalScope"></div>
+    <div class="modal-actions">
+      <a class="btn btn-primary" id="visit" target="_blank" rel="noopener">🌐 Buka Website Jurnal</a>
+      <a class="btn" href="https://sinta.kemdiktisaintek.go.id/journals/index/" target="_blank" rel="noopener">🔎 Cek SINTA</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const journals = [
+  {
+    name:"APTISI Transactions on Technopreneurship (ATT)", rank:"Belum dirinci", publisher:"Pandawan Sejahtera Indonesia",
+    issn:"P-ISSN 2655-8807 • E-ISSN 2656-8888", field:"Technopreneurship, entrepreneurship & teknologi bisnis",
+    freq:"3×/tahun • Maret, Juli, November", review:"Double-blind peer review", apc:"Ikuti kebijakan APC jurnal",
+    scope:"Startup, edupreneurship, agripreneurship, creativepreneurship, digitalpreneurship, healthpreneurship, foodpreneurship, socialpreneurship.",
+    url:"https://att.aptisi.or.id/index.php/att"
+  },
+  {
+    name:"Volksgeist: Jurnal Ilmu Hukum dan Konstitusi", rank:"S1", publisher:"Faculty of Sharia, UIN Prof. K.H. Saifuddin Zuhri Purwokerto",
+    issn:"P-ISSN 2615-174X • E-ISSN 2615-5648", field:"Ilmu hukum, konstitusi & administrasi",
+    freq:"2×/tahun • Juni & Desember", review:"Peer-reviewed", apc:"USD 500",
+    scope:"Hukum tata negara, hukum tata negara Islam, pidana, Islam, perdata, internasional, agraria, administrasi, adat, lingkungan dan isu konstitusional.",
+    url:"https://ejournal.uinsaizu.ac.id/index.php/volksgeist/index"
+  },
+  {
+    name:"Legality: Jurnal Ilmiah Hukum (LJIH)", rank:"S1", publisher:"Faculty of Law, University of Muhammadiyah Malang",
+    issn:"Print 0854-6509 • Online 2549-4600", field:"Ilmu hukum",
+    freq:"2×/tahun • Maret & September", review:"Double-blind peer review", apc:"Rp7.500.000 (Indonesia)",
+    scope:"Hukum Islam, adat, filsafat hukum, teori hukum, comparative law, HAM dan isu hukum Asia Tenggara; termasuk isu AI/digital bila memiliki analisis hukum.",
+    url:"https://ejournal.umm.ac.id/index.php/legality"
+  },
+  {
+    name:"Indonesian Journal of Halal Research (IJHAR)", rank:"S1", publisher:"Halal Center UIN Sunan Gunung Djati Bandung",
+    issn:"P-ISSN 2656-3754 • E-ISSN 2657-0165", field:"Halal research & industri halal",
+    freq:"2×/tahun • Februari & Agustus", review:"Peer-reviewed", apc:"Rp10.000.000 / USD 600",
+    scope:"Halal food/products, medicine, tourism, lifestyle, education, management, industry, theoretical dan applied halal research.",
+    url:"https://journal.uinsgd.ac.id/index.php/ijhar/index"
+  },
+  {
+    name:"BISMA (Bisnis dan Manajemen)", rank:"S1", publisher:"Department of Management, FEB Universitas Negeri Surabaya",
+    issn:"ISSN 1979-7192 • E-ISSN 2549-7790", field:"Bisnis, manajemen, akuntansi & kewirausahaan",
+    freq:"2×/tahun • April & Oktober", review:"Peer-reviewed", apc:"Rp3.500.000 / USD 210",
+    scope:"Strategic management, corporate governance, business ethics, finance, marketing, HRM, operations, entrepreneurship, UMKM, MIS dan organizational behavior.",
+    url:"https://journal.unesa.ac.id/index.php/bisma/index"
+  },
+  {
+    name:"Journal of Regional and City Planning (JRCP)", rank:"Belum dirinci", publisher:"Institut Teknologi Bandung (ITB)",
+    issn:"ISSN 2502-6429", field:"Perencanaan wilayah & kota",
+    freq:"3×/tahun", review:"Double-blind review", apc:"USD 500; diskon hingga 50% dapat diajukan",
+    scope:"Urban/regional studies, spatial planning, regional development, lingkungan kota, governance, infrastruktur dan transformasi wilayah.",
+    url:"https://journals.itb.ac.id/index.php/jpwk/index"
+  },
+  {
+    name:"Lex Scientia Law Review", rank:"Belum dirinci", publisher:"Faculty of Law, Universitas Negeri Semarang (UNNES)",
+    issn:"P-ISSN 2598-9677 • E-ISSN 2598-9685", field:"Contemporary & comparative legal studies",
+    freq:"2×/tahun • Mei & November", review:"Double-blind peer review", apc:"Rp5.000.000 pada halaman APC yang diverifikasi dalam materi sumber",
+    scope:"Hukum dan teknologi, HAM, lingkungan, corporate governance, reformasi peradilan pidana, hukum konstitusi, komparatif, internasional, social justice dan crime.",
+    url:"https://journal.unnes.ac.id/journals/lslr"
+  },
+  {
+    name:"Journal of Coaching and Sports Science (JCSS)", rank:"S1", publisher:"CV. FOUNDAE / Foundation of Advanced Science Education",
+    issn:"E-ISSN 2963-1483 • P-ISSN 2963-1459", field:"Coaching & sports science",
+    freq:"4×/tahun • Maret, Juni, September, Desember", review:"Peer-reviewed", apc:"USD 900 untuk penulis Indonesia",
+    scope:"Sports medicine, physiology, biomechanics, psychology, nutrition & anthropometry, coaching, sports intelligence dan sports data mining.",
+    url:"https://journal.foundae.com/index.php/jcss"
+  },
+  {
+    name:"Journal of Local Government Issues (LOGOS)", rank:"S1", publisher:"Universitas Muhammadiyah Malang (UMM)",
+    issn:"P-ISSN 2620-8091 • E-ISSN 2620-3812", field:"Government studies, governance & local politics",
+    freq:"2×/tahun • Maret & September", review:"Peer-reviewed", apc:"Rp2.500.000 untuk penulis Indonesia",
+    scope:"Local governance, politik lokal, pemilu, demokrasi, desentralisasi, kebijakan publik, pelayanan publik, e-government, transformasi institusi dan urban/rural governance.",
+    url:"https://ejournal.umm.ac.id/index.php/LOGOS/"
+  },
+  {
+    name:"Science and Technology Indonesia (STI)", rank:"S1", publisher:"Universitas Sriwijaya",
+    issn:"P-ISSN 2580-4405 • E-ISSN 2580-4391", field:"Kimia, farmasi, fisika terapan & matematika",
+    freq:"4×/tahun • Januari, April, Juli, Oktober", review:"Minimal dua reviewer", apc:"USD 300",
+    scope:"Jurnal sains dan teknologi dasar. Catatan: situs menyatakan tidak lagi menerima artikel Computer Science, Chemical Engineering dan Chemical Education.",
+    url:"https://sciencetechindonesia.com/index.php/jsti/"
+  },
+  {
+    name:"Asy-Syari'ah", rank:"S2*", publisher:"Faculty of Sharia and Law, UIN Sunan Gunung Djati Bandung",
+    issn:"P-ISSN 2086-9029 • E-ISSN 2654-5675", field:"Hukum Islam & fikih",
+    freq:"2×/tahun", review:"Double-blind peer review", apc:"Rp4.000.000; mulai Vol. 28 No. 2: Rp5.500.000",
+    scope:"Fikih dan hukum Islam, maqasid, keluarga, waris, ekonomi syariah, zakat/wakaf, fintech/AI, HAM, lingkungan dan isu hukum kontemporer.",
+    url:"https://journal.uinsgd.ac.id/index.php/asy-syariah/index"
+  },
+  {
+    name:"EDURELIGIA: Jurnal Pendidikan Agama Islam", rank:"Belum dirinci", publisher:"LP3M, Universitas Nurul Jadid",
+    issn:"P-ISSN 2549-4821 • E-ISSN 2579-5694", field:"Pendidikan Agama Islam",
+    freq:"Terbit berkala", review:"Peer-reviewed", apc:"Ada; nominal tidak dicantumkan dalam materi",
+    scope:"Pendidikan Islam, kurikulum, strategi pembelajaran, pesantren/madrasah, karakter, educational technology, assessment dan inovasi pembelajaran.",
+    url:"https://ejournal.unuja.ac.id/index.php/edureligia/index"
+  },
+  {
+    name:"Ascarya: Journal of Islamic Science, Culture, and Social Studies", rank:"S1", publisher:"Perkumpulan Alumni dan Santri Mahyajatul Qurro'",
+    issn:"P-ISSN 2798-5083 • E-ISSN 2775-4243", field:"Islamic science, culture & social studies",
+    freq:"Biannual menurut riwayat jurnal", review:"Double-blind peer review", apc:"Rp5.000.000 Indonesia / USD 550 internasional",
+    scope:"Islamic studies, jurisprudence, cultural heritage, sociology, anthropology, education, economics, politics, law, business, public administration, psychology dan sejarah.",
+    url:"https://journal.ascarya.or.id/index.php/iscs/about"
+  },
+  {
+    name:"Jurnal Geografi", rank:"Belum dirinci", publisher:"Universitas Negeri Medan (UNIMED) & Ikatan Geograf Indonesia",
+    issn:"P-ISSN 2085-8167 • E-ISSN 2549-7057", field:"Geografi, pendidikan geografi & spasial",
+    freq:"Terbit berkala", review:"Peer-reviewed", apc:"Rp2.500.000 setelah diterima",
+    scope:"Geografi, pendidikan geografi, sosial, pariwisata, lingkungan, hidrologi, klimatologi, SIG, remote sensing, kartografi dan perencanaan wilayah.",
+    url:"https://jurnal.unimed.ac.id/2012/index.php/geo/index"
+  },
+  {
+    name:"PETITA: Jurnal Kajian Ilmu Hukum dan Syariah", rank:"Belum dirinci", publisher:"LKKI, Fakultas Syariah dan Hukum, UIN Ar-Raniry",
+    issn:"P-ISSN 2502-8006 • E-ISSN 2549-8274", field:"Hukum & syariah",
+    freq:"2×/tahun • April & November", review:"Double-blind peer review", apc:"Gratis / tanpa APC",
+    scope:"Sharia law, constitutional law, international law, HAM, halal law, Islamic law, refugee law, transitional justice, medical law, family law dan socio-legal studies.",
+    url:"https://petita.ar-raniry.ac.id/index.php/petita"
+  },
+  {
+    name:"Journal of Islamic Monetary Economics and Finance (JIMF)", rank:"Belum dirinci", publisher:"Bank Indonesia Institute – Bank Indonesia",
+    issn:"P-ISSN 2460-6618 • E-ISSN 2460-6146", field:"Islamic economics, monetary economics & finance",
+    freq:"4×/tahun", review:"Double-blind peer review", apc:"Gratis",
+    scope:"Islamic economics, banking, finance, monetary policy, macro/microeconomics, sukuk, waqf, financial inclusion, fintech dan Islamic social finance.",
+    url:"https://jimf-bi.org/JIMF"
+  },
+  {
+    name:"Jurnal Organisasi dan Manajemen (JOM)", rank:"Belum dirinci", publisher:"Universitas Terbuka (UT) • mitra Forum Manajemen Indonesia",
+    issn:"P-ISSN 2085-9686 • E-ISSN 2442-9155", field:"Management, finance, organization & business",
+    freq:"2×/tahun • Januari–Juni & Juli–Desember", review:"Peer-reviewed", apc:"Rp1.500.000 Indonesia",
+    scope:"Management accounting, MIS, strategic management, finance, banking management, organizational behavior, HRM, operations, marketing, e-business dan entrepreneurship.",
+    url:"https://jurnal.ut.ac.id/index.php/jom/index"
+  },
+  {
+    name:"Jurnal Ilmiah Akuntansi Kesatuan (JIAKES)", rank:"S2", publisher:"LPPM IBI Kesatuan",
+    issn:"P-ISSN 2337-7852 • E-ISSN 2721-3048", field:"Akuntansi",
+    freq:"Informasi frekuensi situs tidak sepenuhnya konsisten", review:"Peer-reviewed", apc:"Rp5.000.000",
+    scope:"Penelitian akuntansi dan topik terkait, dengan pengindeks yang tercantum seperti DOAJ, Dimensions, Crossref, Garuda, ROAD dan lainnya.",
+    url:"https://jurnal.ibik.ac.id/index.php/jiakes"
+  },
+  {
+    name:"The Indonesian Accounting Review (TIAR)", rank:"S2", publisher:"Universitas Hayam Wuruk Perbanas",
+    issn:"P-ISSN 2086-3802 • E-ISSN 2302-822X", field:"Akuntansi",
+    freq:"2×/tahun • Januari–Juni & Juli–Desember", review:"Blind review", apc:"Rp2.000.000",
+    scope:"Financial accounting dan penelitian akuntansi dalam konteks Indonesia serta negara berkembang. Materi sumber menyebut TIAR belum terindeks Scopus.",
+    url:"https://journal.perbanas.ac.id/index.php/tiar"
+  },
+  {
+    name:"International Journal of Islamic Economics and Finance (IJIEF)", rank:"S2", publisher:"Universitas Muhammadiyah Yogyakarta (UMY)",
+    issn:"P-ISSN 2622-3562 • E-ISSN 2622-4372", field:"Islamic economics & finance",
+    freq:"2×/tahun • Januari & Juli", review:"Double-blind peer review", apc:"Rp1.000.000 / USD 65",
+    scope:"Islamic economics, banking, finance, macro/microeconomics, monetary economics, social finance, microfinance, fintech, public finance dan Islamic political economy.",
+    url:"https://journal.umy.ac.id/index.php/ijief"
+  }
+];
+
+const grid = document.getElementById("grid");
+const search = document.getElementById("search");
+const rank = document.getElementById("rank");
+const count = document.getElementById("count");
+const modal = document.getElementById("modal");
+const close = document.getElementById("close");
+
+function safe(text){return String(text).replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+function render(){
+  const q = search.value.toLowerCase().trim();
+  const r = rank.value;
+  const filtered = journals.filter(j=>{
+    const hay = [j.name,j.rank,j.publisher,j.issn,j.field,j.scope,j.freq,j.apc].join(" ").toLowerCase();
+    const rankOK = r==="all" ? true : r==="other" ? !["S1","S2","S2*"].includes(j.rank) : j.rank===r || (r==="S2" && j.rank==="S2*");
+    return hay.includes(q) && rankOK;
+  });
+  count.textContent = `${filtered.length} jurnal`;
+  grid.innerHTML = filtered.map((j,i)=>`
+    <article class="card reveal" data-index="${journals.indexOf(j)}" style="animation-delay:${Math.min(i*45,500)}ms">
+      <div class="rank">${safe(j.rank === "Belum dirinci" ? "SINTA • INFO BELUM DIRINCI" : "SINTA " + j.rank.replace("*",""))}</div>
+      <div class="jname">${safe(j.name)}</div>
+      <div class="publisher">${safe(j.publisher)}</div>
+      <div class="tags">
+        <span class="tag">${safe(j.field.split(",")[0])}</span>
+        <span class="tag">${safe(j.review)}</span>
+      </div>
+      <div class="scope">${safe(j.scope)}</div>
+      <div class="card-footer"><span>BUKA DETAIL</span><span class="arrow">↗</span></div>
+    </article>
+  `).join("");
+  document.querySelectorAll(".card").forEach(c=>c.addEventListener("click",()=>openModal(Number(c.dataset.index))));
+}
+function openModal(i){
+  const j=journals[i];
+  document.getElementById("modalRank").textContent = j.rank==="Belum dirinci" ? "SINTA • PERLU VERIFIKASI" : "SINTA " + j.rank.replace("*","");
+  document.getElementById("modalTitle").textContent=j.name;
+  document.getElementById("modalScope").innerHTML="<strong>Focus & Scope</strong><br>"+safe(j.scope);
+  document.getElementById("details").innerHTML=[
+    ["Penerbit",j.publisher],["ISSN",j.issn],["Bidang",j.field],["Frekuensi",j.freq],
+    ["Peer Review",j.review],["APC / Biaya",j.apc]
+  ].map(x=>`<div class="detail"><small>${safe(x[0])}</small><b>${safe(x[1])}</b></div>`).join("");
+  document.getElementById("visit").href=j.url;
+  modal.classList.add("open");
+  document.body.style.overflow="hidden";
+}
+function closeModal(){modal.classList.remove("open");document.body.style.overflow=""}
+search.addEventListener("input",render);
+rank.addEventListener("change",render);
+close.addEventListener("click",closeModal);
+modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+render();
+</script>
+</body>
+</html>
